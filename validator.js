@@ -47,16 +47,16 @@ function Validator(context, options) {
                 if (!fg.classList.contains('has-error')) {
                     fg.classList.add('has-error');
                 }
-                messages = fg.querySelectorAll('.validator-error-message') || [];
+                messages = fg.querySelectorAll('.text-invalid') || [];
                 if (messages.length === 0) {
                     showMessage(fg, message);
                 }
             } else { // Other cases
-                err = parent.classList.contains('validator-error') ? parent : undefined;
+                err = parent.classList.contains('invalid') ? parent : undefined;
                 if (!err) {
                     // <div>-обертка для инпута с ошибкой (оборачивается в <div> только тот инпут, в котором возникла ошибка)
                     err = document.createElement('div');
-                    err.classList.add('validator-error');
+                    err.classList.add('invalid');
                     err.appendChild(input);
                     showMessage(err, message);
                     // Вставка в то место, где был исходный инпут
@@ -85,12 +85,12 @@ function Validator(context, options) {
                 if (fg.classList.contains('has-error')) {
                     fg.classList.remove('has-error');
                 }
-                messages = th.isNode(fg) ? fg.querySelectorAll('.validator-error-message') : [];
+                messages = th.isNode(fg) ? fg.querySelectorAll('.text-invalid') : [];
                 if (messages.length > 0) {
                     messages.forEach(function(msg) { fg.removeChild(msg); });
                 }
             } else { // other cases
-                err = parent.classList.contains('validator-error') ? parent : undefined;
+                err = parent.classList.contains('invalid') ? parent : undefined;
                 if (err && err.parentNode) {
                     // replace to back state node
                     err.parentNode.replaceChild(field, err);
@@ -105,7 +105,7 @@ function Validator(context, options) {
         var e;
         if (th.isNode(node) && message && th.isString(message)) {
             e = document.createElement('p');
-            e.classList.add('validator-error-message');
+            e.classList.add('text-invalid');
             e.innerText = message;
             node.appendChild(e);
         }
