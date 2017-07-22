@@ -102,12 +102,12 @@ function Validator(context, options) {
     };
 
     function showMessage(node, message) {
-        var err_message;
+        var e;
         if (th.isNode(node) && message && th.isString(message)) {
-            err_message = document.createElement('p');
-            err_message.classList.add('validator-error-message');
-            err_message.innerText = message;
-            node.appendChild(err_message);
+            e = document.createElement('p');
+            e.classList.add('validator-error-message');
+            e.innerText = message;
+            node.appendChild(e);
         }
     };
 
@@ -117,28 +117,17 @@ function Validator(context, options) {
             results = [],
             selectors = [];
 
-        function createSelector(fields) {
-            var selectors = [];
-            if (th.isArray(fields) && fields.length > 0) {
-                fields.forEach(function(each) {
-                    if (each && th.isString(each)) {
-                        selectors.push('[name="' + each + '"]');
+        function findNodes(items) {
+            var fields = [];
+            items.forEach(function(item) {
+                var nodes;
+                if (th.isString(item)) {
+                    nodes = context.querySelectorAll('[name="' + item + '"]');
+                    if (th.isNodeList(nodes) && nodes.length > 0 && (th.isHTMLInputElement(nodes[0]) || th.isHTMLTextAreaElement(nodes[0]))) {
+                        fields.push(nodes[0]);
                     }
-                });
-            }
-            return selectors.join(',');
-        };
-
-        function filterNodes(nodes) {
-            var fields = [],
-                i = 0;
-            if (th.isNodeList(nodes) && nodes.length > 0) {
-                for (i; i < nodes.length; ++i) {
-                    if (th.isHTMLInputElement(nodes[i]) || th.isHTMLTextAreaElement(nodes[i])) {
-                        fields.push(nodes[i]);
-                    }
-                };
-            }
+                }
+            });
             return fields;
         };
 
@@ -146,9 +135,8 @@ function Validator(context, options) {
         if (window && window.document && this.isNode(context)) {
             // options.fields
             if (options.fields && this.isArray(options.fields) && options.fields.length > 0) {
-                // creating selector based on validator's config and find DOM nodes and
-                // filter by <input> and <textarea> nodes only
-                fields = filterNodes(context.querySelectorAll(createSelector(options.fields)));
+                // find <input> and <textarea> elements only in the DOM
+                fields = findNodes(options.fields);
                 // validate fields
                 if (this.isArray(fields) && fields.length > 0) {
                     // reset validation state for each field
@@ -163,9 +151,8 @@ function Validator(context, options) {
             }
             // options.equals
             if (options.equals && this.isArray(options.equals) && options.equals.length > 0) {
-                // creating selector based on validator's config and find DOM nodes and
-                // filter by <input> and <textarea> nodes only
-                equals = filterNodes(context.querySelectorAll(createSelector(options.equals)));
+                // find <input> and <textarea> elements only in the DOM
+                fields = findNodes(options.equals);
                 // check for fields match
                 if (this.isArray(equals) && equals.length > 0) {
                     // check if fields are equals
