@@ -23,6 +23,7 @@ In this example we will try to validate next fields: "login" as email address, "
 
 HTML
 
+```html
 <form novalidate id="example-form">
     <div class="form-group">
         <label>Login</label>
@@ -46,6 +47,7 @@ HTML
     </div>
     <button type="submit" class="btn btn-success" id="validate-btn">Validate</button>
 </form>
+```
 
 Javascript
 
