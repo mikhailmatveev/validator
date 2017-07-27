@@ -247,7 +247,7 @@ var Validator = (function() {
         };
 
         // helper function for message showing
-        showMessage = function(node, message) {
+        function showMessage(node, message) {
             var e;
             if (isNode(node) && message && isString(message)) {
                 e = document.createElement('p');
