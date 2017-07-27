@@ -2,12 +2,6 @@
  * @module Validator Validates any <input> or <textarea> at specified context
  * and checks for equality field values.
  *
- * @param {object} context The closest DOM node, containing <input> or
- * <textarea> elements for validation
- *
- * @param {object} options Validation config. List of fields for validation
- * and list of fields for equality checking
- *
  * @author mikhailmatveev
  * @see https://github.com/mikhailmatveev
  */
@@ -179,6 +173,17 @@ var Validator = (function() {
         return false;
     };
 
+    /**
+     * Validates each field whose name is specified in the "options" parameter
+     *
+     * @param {object} context The closest DOM node, containing <input> or
+     * <textarea> elements for validation
+     *
+     * @param {object} options Validation config. List of fields for validation
+     * and list of fields for equality checking
+     *
+     * @returns {boolean} The result of validation
+     */
     validator.validate = function(context, options) {
 
         var equals,
