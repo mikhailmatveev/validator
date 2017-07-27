@@ -54,16 +54,10 @@ Javascript
 ```javascript
 var form = document.getElementById('example-form');
 form.addEventListener('submit', function(e) {
-    // create new instance of Validator object
-    var validator = new Validator(form, {
-        // fields in the specified context, that will be validated
+    e.preventDefault();
+    Validator.validate(this, {
         fields: ['login', 'phone', 'password', 'password-confirm', 'comment'],
-        // fields in the specified context, that will be checked for equal values
         equals: ['password', 'password-confirm']
     });
-    // Don't forget this!
-    e.preventDefault();
-    // run validation!
-    validator.validate();
 }, false);
 ```
