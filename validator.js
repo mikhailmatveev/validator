@@ -217,7 +217,7 @@ var Validator = (function() {
                         // <div>-обертка для инпута с ошибкой (оборачивается в <div> только тот инпут, в котором возникла ошибка)
                         err = document.createElement('div');
                         err.classList.add('invalid');
-                        err.appendChild(input);
+                        err.appendChild(field);
                         showMessage(err, message);
                         // Вставка в то место, где был исходный инпут
                         // Иначе - вставить в конец
